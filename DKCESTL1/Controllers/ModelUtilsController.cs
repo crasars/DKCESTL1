@@ -41,15 +41,15 @@ namespace DKCESTL1
         {
             List<Edge> map = lookupController.queryForMap().Value;
 
-            List<int[]> cityIdMap = new List<int[]>();
+            List<int[]> cityIdMap = new List<int[]>(); 
 
             foreach (Edge edge in map)
             {
                 int city1 = convertCitynameToCityId(edge.fromCity.city.ToUpper());
                 int city2 = convertCitynameToCityId(edge.toCity.city.ToUpper());
-                int nodes = edge.node;
+                int time = edge.node*4;
 
-                int[] cityIdEdge = new int[] {city1, city2, nodes};
+                int[] cityIdEdge = new int[] {city1, city2, time};
 
                 cityIdMap.Add(cityIdEdge);
             }
@@ -58,9 +58,5 @@ namespace DKCESTL1
         }
 
 
-
     }
-    
-
-    
 }
