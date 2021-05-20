@@ -54,7 +54,7 @@ namespace DKCESTL1.Controllers
 
             SqlConnection cnn = new SqlConnection(connectionString);
 
-            string query = "SELECT * FROM dbo.map";
+            string query = "SELECT * FROM dbo.completeMap";
             SqlCommand command = new SqlCommand(query, cnn);
             SqlDataReader reader;
 
@@ -166,5 +166,70 @@ namespace DKCESTL1.Controllers
             cnn.Close();
 
         }
+
+        [HttpGet("disableCity/{city}")]
+        public string disableCity(string city)
+        {
+            string connectionString = @"Data Source=dbs-tl-dk1.database.windows.net;Initial Catalog=db-tl-dk1;User ID=admin-tl-dk1;Password=telStarRox16";
+            
+            SqlConnection cnn = new SqlConnection(connectionString);
+
+            string query = "UPDATE dbo.completeMap SET available = 0 WHERE city1 LIKE '" + city + "' OR city2 LIKE '" + city + "';";
+
+
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Connection.Open();
+
+            int rowsAdded = command.ExecuteNonQuery();
+
+            cnn.Close();
+
+            return "Disabled " + city;
+        }
+
+        [HttpGet("enableCity/{city}")]
+        public string enableCity(string city)
+        {
+            string connectionString = @"Data Source=dbs-tl-dk1.database.windows.net;Initial Catalog=db-tl-dk1;User ID=admin-tl-dk1;Password=telStarRox16";
+
+            SqlConnection cnn = new SqlConnection(connectionString);
+
+            string query = "UPDATE dbo.completeMap SET available = 1 WHERE city1 LIKE '" + city + "' OR city2 LIKE '" + city + "';";
+
+
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Connection.Open();
+
+            int rowsAdded = command.ExecuteNonQuery();
+
+            cnn.Close();
+
+            return "Enabled " + city;
+        }
+
+
+        [HttpGet("updatePrice/{parcelType}/{price}")]
+        public string updatePrice(string parcelType, string price)
+        {
+            string connectionString = @"Data Source=dbs-tl-dk1.database.windows.net;Initial Catalog=db-tl-dk1;User ID=admin-tl-dk1;Password=telStarRox16";
+
+            SqlConnection cnn = new SqlConnection(connectionString);
+
+            string query = "UPDATE dbo.price_data SET rate = " + price + " WHERE parcelType LIKE '" + parcelType.ToString() + "';";
+
+
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Connection.Open();
+
+            int rowsAdded = command.ExecuteNonQuery();
+
+            cnn.Close();
+
+            return "Updated price of " + parcelType;
+        }
+
     }
 }
