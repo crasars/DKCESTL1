@@ -32,6 +32,7 @@ namespace DKCESTL1.Controllers
 
             Parcel testParcel = JsonConvert.DeserializeObject<Parcel>(parcel);
             //return Ok(parcel.endCity.city);
+
             return Ok($"SendParcel SendParcel startCity=={testParcel.startCity.name} endCity=={testParcel.endCity.name}");
         }
     }

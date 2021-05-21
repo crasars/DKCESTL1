@@ -45,3 +45,19 @@ export function sendParcel(
     xhr.send(data);
     */
 }
+
+export const findPath = async(
+    fromCity: string,
+    toCity: string,
+    parceltype: string,
+    weight: number,
+    recommended: boolean) => {
+    console.log('finding path');
+    const { status, data } =
+        await axios.get("modelutils/calculate/" + parceltype + "/" + weight + "/" + fromCity + "/" + toCity + "/" + recommended);
+    console.log("found path", data, status);
+
+    return data;
+    // let data = await fetch("modelutils/calculate/" + parceltype + "/" + weight + "/" + fromCity + "/" + toCity);
+    // let json = await data.json();
+}
