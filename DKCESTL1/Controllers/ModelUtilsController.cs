@@ -65,10 +65,10 @@ namespace DKCESTL1
 
                 
 
-                if (edge.node == 0)
+               /* if (edge.node == 0)
                 {
                     ExternalIntegrationController externalRest = new ExternalIntegrationController();
-                    ExternalIntegration EI = externalRest.Get(edge.fromCity.city, edge.toCity.city, parcelType,
+                    ExternalIntegration EI = externalRest.Get(edge.fromCity.name, edge.toCity.name, parcelType,
                         parcelWeight).Value;
                     if (EI.possible)
                     {
@@ -81,9 +81,9 @@ namespace DKCESTL1
 
                 }
                 else
-                {
+                {*/
                     weight = edge.node * 4;
-                }
+                //}
 
                 int[] cityIdEdge = new int[] {city1, city2, weight };
 

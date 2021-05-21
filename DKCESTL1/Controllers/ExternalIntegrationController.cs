@@ -30,7 +30,7 @@ namespace DKCESTL1.Controllers
         [HttpGet("ship/{city1}/{city2}/{parcelWeight}/{parcelType}/{token}")]
         public ActionResult<ExternalIntegration> Get(string city1, string city2, string parcelType, int parcelWeight, string token)
         {
-            //token = "jhflidhfæishfsæohføosjøfllkclkc";
+            token = "jhflidhfæishfsæohføosjøfllkclkc";
             int type = 0;
             if (parcelType == "Live Animals")
             {
