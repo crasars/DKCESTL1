@@ -8,8 +8,8 @@ export interface ParcelType {
 
 export interface Parcel {
     startCity: City;
-    destination: City;
-    type: ParcelType;
+    endCity: City;
+    parcelType: ParcelType;
     weight: number;
     route: boolean;
     signed: boolean;

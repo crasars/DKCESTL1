@@ -1,4 +1,5 @@
 ﻿import { City, Parcel, ParcelType } from "./types";
+import axios from "axios";
 
 export function sendParcel(
     fromCity: string,
@@ -11,7 +12,26 @@ export function sendParcel(
     const sCity: City = { name: fromCity };
     const eCity: City = { name: toCity };
     const pType: ParcelType = { type: parcelType };
-    const parcel: Parcel = { startCity: sCity, destination: eCity, type: pType, weight: weight, route: routeSelector, signed: recommendedParcel };
+    const parcel: Parcel = { startCity: sCity, endCity: eCity, parcelType: pType, weight: weight, route: routeSelector, signed: recommendedParcel };
+    const data = new FormData();
+    data.append("parcel", JSON.stringify(parcel));
+    console.log("formData", data.getAll("parcel"));
+
+    axios.post("SendParcel/sendParcel", data);
+
+    /*
+    axios({
+        method: "POST",
+        url: "SendParcel/sendParcel",
+        data: JSON.stringify(parcel)
+    });
+
+    
+    fetch("SendParcel/sendParcel",
+        {
+            method: "POST",
+            body: data
+        }).then(response => response.text()).then(data => this.setState({ text: data, loading: false }));
     console.log("sending parcel", parcel);
     const data = new FormData();
     data.append("City", fromCity);
@@ -23,4 +43,5 @@ export function sendParcel(
     const xhr = new XMLHttpRequest();
     xhr.open("post", "/sendParcel", true);
     xhr.send(data);
+    */
 }

@@ -155,7 +155,7 @@ namespace DKCESTL1.Controllers
                            "signed, " +
                            "weight) " +
                            "VALUES " +
-                           "('" + parcel.startCity.city + "','" + parcel.endCity.city + "','" + parcel.parcelType + "'," + signed + "," + parcel.weight + ");";
+                           "('" + parcel.startCity.name + "','" + parcel.endCity.name + "','" + parcel.parcelType + "'," + signed + "," + parcel.weight + ");";
 
 
             SqlCommand command = new SqlCommand(query, cnn);

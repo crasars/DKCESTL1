@@ -2,13 +2,13 @@
 {
     public class City
     {
-        public City(string city)
+        public City(string name)
         {
-            this.city = city;
+            this.name = name;
 
         }
 
-        public string city { get; set; }
+        public string name { get; set; }
 
     }
 }

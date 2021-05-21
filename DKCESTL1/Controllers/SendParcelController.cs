@@ -12,26 +12,27 @@ using Newtonsoft.Json;
 namespace DKCESTL1.Controllers
 {
     [ApiController]
-    [Route("sendParcel")]
+    [Route("[controller]")]
     public class SendParcelController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ILogger<SendParcelController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public SendParcelController(ILogger<WeatherForecastController> logger)
+        public SendParcelController(ILogger<SendParcelController> logger)
         {
             _logger = logger;
         }
 
-        [HttpPost]
-        public ActionResult SendParcel(City city)
+        [HttpPost("sendParcel")]
+        public ActionResult SendParcel([FromForm]string parcel)
         {
-            Console.WriteLine("hej");
-            return Content("Success :)");
+            if (parcel == null)
+            {
+                return Ok();
+            }
+
+            Parcel testParcel = JsonConvert.DeserializeObject<Parcel>(parcel);
+            //return Ok(parcel.endCity.city);
+            return Ok($"SendParcel SendParcel startCity=={testParcel.startCity.name} endCity=={testParcel.endCity.name}");
         }
     }
 }

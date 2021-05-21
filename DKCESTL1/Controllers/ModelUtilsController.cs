@@ -45,8 +45,8 @@ namespace DKCESTL1
 
             foreach (Edge edge in map)
             {
-                int city1 = convertCitynameToCityId(edge.fromCity.city.ToUpper());
-                int city2 = convertCitynameToCityId(edge.toCity.city.ToUpper());
+                int city1 = convertCitynameToCityId(edge.fromCity.name.ToUpper());
+                int city2 = convertCitynameToCityId(edge.toCity.name.ToUpper());
                 int nodes = edge.node;
 
                 int[] cityIdEdge = new int[] {city1, city2, nodes};

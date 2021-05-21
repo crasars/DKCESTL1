@@ -88,7 +88,7 @@ export default function Home() {
             </Form.Group>
             <Form.Group as={Row}>
                 <Col sm={{ span: 10, offset: 2 }}>
-                    <Button type="submit" onClick={() => dispatch(Actions.sendParcel(toCity, cityDestination, parcelType, weight, routeSelector, recommendedParcel))}>Find route</Button>
+                    <Button type="submit" onClick={() => Actions.sendParcel(toCity, cityDestination, parcelType, weight, routeSelector, recommendedParcel)}>Find route</Button>
                 </Col>
             </Form.Group>
         </Card>

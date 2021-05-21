@@ -1,11 +1,12 @@
 ﻿namespace DKCESTL1
 {
-    public enum ParcelType
+    public class ParcelType
     {
-        Standard,
-        Weapons,
-        LiveAnimals,
-        CautiousParcel,
-        RefrigeratedGoods
+        public ParcelType(string type)
+        {
+            this.type = type;
+        }
+
+        public string type { get; set; }
     }
 }
