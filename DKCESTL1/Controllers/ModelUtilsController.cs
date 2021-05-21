@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net.Http;
+using Dijkstra.NET.Graph;
+using Dijkstra.NET.ShortestPath;
 using DKCESTL1.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -68,7 +70,7 @@ namespace DKCESTL1
                 if (edge.node == 0)
                 {
                     ExternalIntegrationController externalRest = new ExternalIntegrationController();
-                    ExternalIntegration EI = externalRest.Get(edge.fromCity.city, edge.toCity.city, parcelType,
+                    ExternalIntegration EI = externalRest.Get(edge.fromCity.name, edge.toCity.name, parcelType,
                         parcelWeight).Value;
                     if (EI.possible)
                     {
@@ -135,6 +137,49 @@ namespace DKCESTL1
         }
 
 
+        [HttpGet("calculate/{parceltype}/{parcelweight}")]
+        public void calculateFastestRoute(string fromCity, string toCity, string parceltype,int parcelweight)
+        {
+
+            int fromCityId = convertCitynameToCityId(fromCity);
+            int toCityId = convertCitynameToCityId(toCity);
+
+            var graph = new Graph<int, string>();
+            for (int k = 1; k < 32; k++)
+            {
+                graph.AddNode(k);
+            }
+
+            List<int[]> nodestuff = parseMapToFastestDijkstraList(parceltype,parcelweight);
+
+
+            foreach (int[] row in nodestuff)
+            {
+                graph.Connect((uint) row[0], (uint) row[1], row[2],"");
+            }
+
+
+            var result = graph.Dijkstra((uint) fromCityId, (uint) toCityId);
+
+            uint[] path = result.GetPath().ToArray();
+            Console.WriteLine("result.ToString(); " + result.ToString());
+            int[] intArr = new int[path.Length];
+            for (int n = 0; n < path.Length; n++)
+            {
+                Console.WriteLine("path " + path[n].ToString());
+                intArr[n] = (int)path[n];
+            }
+            for (int o = 1; o < path.Length; o++)
+            {
+                var node = graph >> intArr[o - 1];
+                var vehicle = node.GetFirstEdgeCustom(path[o]);
+                Console.WriteLine("vehicle " + vehicle);
+            }
+
+        }
+    }
+
+
         /*
         [HttpGet("parseCheapestDijkstraMap")]
         public List<int[]> parseMapToCheapestDijkstraList()
@@ -160,4 +205,3 @@ namespace DKCESTL1
         
 
     }
-}
