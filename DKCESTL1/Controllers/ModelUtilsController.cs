@@ -153,7 +153,7 @@ namespace DKCESTL1
         }
 
         [HttpGet("calculate/{parceltype}/{parcelweight}/{fromCity}/{toCity}/{recommended}")]
-        public string[] calculateFastestRoute(string fromCity, string toCity, string parceltype, int parcelweight, Boolean recommended)
+        public string calculateFastestRoute(string fromCity, string toCity, string parceltype, int parcelweight, Boolean recommended)
         {
 
             int fromCityId = convertCitynameToCityId(fromCity.ToUpper());
@@ -245,7 +245,25 @@ namespace DKCESTL1
 
             citynames[path.Length + 1] = priceOfDelivery.ToString();
 
-            return citynames;
+            string output = "";
+            for (int index = 0; index < citynames.Length; index++)
+            {
+                if (index < (citynames.Length - 2))
+                {
+                    output = output + citynames[index] + "-";
+                }
+                else if (index == citynames.Length-2)
+                {
+                    output = output + "Time:" + citynames[index] + "-";
+                }
+                else if (index == citynames.Length-1)
+                {
+                    output = output + "Price:" + citynames[index];
+                }
+                
+            }
+
+            return output;
         }
 
         /*
