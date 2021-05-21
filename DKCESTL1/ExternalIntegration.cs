@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DKCESTL1
 {
-    public class SegmentInformation
+    public class ExternalIntegration
     {
-        public bool available { get; set; }
+        public bool possible { get; set; }
         public double price { get; set; }
-        public int time { get; set; }
+        public int duration { get; set; }
     }
 }
