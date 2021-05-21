@@ -56,8 +56,8 @@ namespace DKCESTL1
                     continue;
                 }
 
-                int city1 = convertCitynameToCityId(edge.fromCity.city.ToUpper());
-                int city2 = convertCitynameToCityId(edge.toCity.city.ToUpper());
+                int city1 = convertCitynameToCityId(edge.fromCity.name.ToUpper());
+                int city2 = convertCitynameToCityId(edge.toCity.name.ToUpper());
 
                 int weight;
 

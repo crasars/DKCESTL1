@@ -34,8 +34,8 @@ namespace DKCESTL1.Controllers
        
             foreach (Edge edge in allEdges)
             {
-                string startCity = edge.fromCity.city.ToLower();
-                string endCity = edge.toCity.city.ToLower();
+                string startCity = edge.fromCity.name.ToLower();
+                string endCity = edge.toCity.name.ToLower();
                 if (startCity.Equals(City1) || endCity.Equals(City1))
                 {
                     if (startCity.Equals(City2) || endCity.Equals(City2))
