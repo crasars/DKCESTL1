@@ -120,7 +120,7 @@ namespace DKCESTL1.Controllers
 
             SqlConnection cnn = new SqlConnection(connectionString);
 
-            string query = "SELECT * FROM dbo.map";
+            string query = "SELECT * FROM dbo.completeMap";
             SqlCommand command = new SqlCommand(query, cnn);
             SqlDataReader reader;
 
