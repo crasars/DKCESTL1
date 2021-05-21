@@ -275,6 +275,7 @@ namespace DKCESTL1.Controllers
             return "Disabled " + city;
         }
 
+
         [HttpGet("enableCity/{city}")]
         public string enableCity(string city)
         {
@@ -295,6 +296,7 @@ namespace DKCESTL1.Controllers
 
             cnn.Close();
 
+
             string queryLocalTable = "UPDATE dbo.map SET available = 1 WHERE city1 LIKE '" + city + "' OR city2 LIKE '" + city + "';";
 
             SqlCommand commandLocalTable = new SqlCommand(queryLocalTable, cnn);
@@ -302,6 +304,7 @@ namespace DKCESTL1.Controllers
             commandLocalTable.Connection.Open();
 
             int rowsAddedSecondTime = commandLocalTable.ExecuteNonQuery();
+
 
             cnn.Close();
 

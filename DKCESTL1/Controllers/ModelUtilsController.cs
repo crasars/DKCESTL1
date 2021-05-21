@@ -43,7 +43,7 @@ namespace DKCESTL1
         {
             List<Edge> map = lookupController.queryForMap().Value;
 
-            List<int[]> cityIdMap = new List<int[]>();
+            List<int[]> cityIdMap = new List<int[]>(); 
 
             //ExternalIntegrationController externalRest = new ExternalIntegrationController();
 
@@ -58,6 +58,7 @@ namespace DKCESTL1
 
                 int city1 = convertCitynameToCityId(edge.fromCity.city.ToUpper());
                 int city2 = convertCitynameToCityId(edge.toCity.city.ToUpper());
+
                 int weight;
 
                 //if (edge.node == 0)
@@ -79,6 +80,7 @@ namespace DKCESTL1
                 //}
 
                 int[] cityIdEdge = new int[] {city1, city2, weight };
+
 
                 cityIdMap.Add(cityIdEdge);
             }
@@ -112,7 +114,4 @@ namespace DKCESTL1
         
 
     }
-    
-
-    
 }
