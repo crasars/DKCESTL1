@@ -131,23 +131,23 @@ namespace DKCESTL1
             }
 
 
-            i = 0;
-            foreach (int[] row in jaggedArray)
-            {
-                for (int j=i+1; j <= jaggedArray.Length-1; j++)
-                {
-                    int value1 = (int) jaggedArray[j].GetValue(0);
-                    int value2 = (int) row.GetValue((1));
-                    int value3 = (int) jaggedArray[j].GetValue(1);
-                    int value4 = (int) row.GetValue(0);
-                    if (value1 == value2 && value3 == value4)
-                    {
-                        finalList.RemoveAt(j);
-                    }
-                }
+            //i = 0;
+            //foreach (int[] row in jaggedArray)
+            //{
+            //    for (int j=i+1; j <= jaggedArray.Length-1; j++)
+            //    {
+            //        int value1 = (int) jaggedArray[j].GetValue(0);
+            //        int value2 = (int) row.GetValue((1));
+            //        int value3 = (int) jaggedArray[j].GetValue(1);
+            //        int value4 = (int) row.GetValue(0);
+            //        if (value1 == value2 && value3 == value4)
+            //        {
+            //            finalList.RemoveAt(j);
+            //        }
+            //    }
 
-                i++;
-            }
+            //    i++;
+            //}
 
             return finalList;
         }
