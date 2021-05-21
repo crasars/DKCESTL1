@@ -319,7 +319,7 @@ namespace DKCESTL1.Controllers
 
             SqlConnection cnn = new SqlConnection(connectionString);
 
-            string query = "UPDATE dbo.price_data SET rate = " + price + " WHERE parcelType LIKE '" + parcelType.ToString() + "';";
+            string query = "UPDATE dbo.price_data SET rate = " + price + " WHERE parcelType LIKE '" + parcelType + "';";
 
 
             SqlCommand command = new SqlCommand(query, cnn);
