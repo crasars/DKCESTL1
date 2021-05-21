@@ -1,4 +1,6 @@
-﻿namespace DKCESTL1
+﻿using System;
+
+namespace DKCESTL1
 {
     public class Edge
     {
@@ -9,7 +11,9 @@
         public int node { get; set; }
         public Vehicle vehicle { get; set; }
 
-        public Edge(City fromCity, City toCity, int price, int time, int node, Vehicle vehicle)
+        public Boolean available { get; set; }
+
+        public Edge(City fromCity, City toCity, int price, int time, int node, Vehicle vehicle, Boolean available)
         {
             this.fromCity = fromCity;
             this.toCity = toCity;
@@ -17,6 +21,7 @@
             this.time = time;
             this.node = node;
             this.vehicle = vehicle;
+            this.available = available;
         }
     }
 }
