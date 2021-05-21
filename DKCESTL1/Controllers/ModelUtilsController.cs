@@ -152,8 +152,8 @@ namespace DKCESTL1
             return finalList;
         }
 
-        [HttpGet("calculate/{parceltype}/{parcelweight}/{fromCity}/{toCity}")]
-        public string[] calculateFastestRoute(string fromCity, string toCity, string parceltype, int parcelweight)
+        [HttpGet("calculate/{parceltype}/{parcelweight}/{fromCity}/{toCity}/{recommended}")]
+        public string[] calculateFastestRoute(string fromCity, string toCity, string parceltype, int parcelweight,int recommended)
         {
 
             int fromCityId = convertCitynameToCityId(fromCity.ToUpper());
@@ -192,12 +192,58 @@ namespace DKCESTL1
                 var vehicle = node.GetFirstEdgeCustom(path[o]);
             }
 
-            string[] citynames = new string[path.Length];
+            string[] citynames = new string[path.Length+2];
 
             for (int m = 0; m < path.Length; m++)
             {
                 citynames[m] = convertCityIdToCityname(intArr[m]);
             }
+
+            citynames[path.Length] = result.Distance.ToString();
+
+
+            List<string[]> prices = lookupController.queryForPricingData().Value;
+
+            List<string> formattedPrices = new List<string>();
+
+            foreach (string[] price in prices)
+            {
+                string formattedPrice = Convert.ToString(price.GetValue(1));
+                formattedPrice.Replace(",", ".");
+                formattedPrices.Add(formattedPrice);
+            }
+
+
+            double priceOfDelivery = 0;
+            int nodesEdgeForDelivery = result.Distance/4;
+            if (parceltype.Equals("standard"))
+            {
+                priceOfDelivery = Convert.ToDouble(formattedPrices[0]) * nodesEdgeForDelivery;
+            }
+            else if (parceltype.Equals("weapons"))
+            {
+                priceOfDelivery = Convert.ToDouble(formattedPrices[0]) * Convert.ToDouble(formattedPrices[2]) * nodesEdgeForDelivery;
+            }
+            else if (parceltype.Equals("live animals"))
+            {
+                priceOfDelivery = Convert.ToDouble(formattedPrices[0]) * Convert.ToDouble(formattedPrices[3]) * nodesEdgeForDelivery;
+            }
+            else if (parceltype.Equals("cautious parcels"))
+            {
+                priceOfDelivery = Convert.ToDouble(formattedPrices[0]) * Convert.ToDouble(formattedPrices[4]) * nodesEdgeForDelivery;
+            }
+            else if (parceltype.Equals("refrigerated goods"))
+            {
+                priceOfDelivery = Convert.ToDouble(formattedPrices[0]) * Convert.ToDouble(formattedPrices[5]) * nodesEdgeForDelivery;
+            }
+            if (recommended == 1)
+            {
+                priceOfDelivery = priceOfDelivery + Convert.ToDouble(formattedPrices[1]);
+            }
+
+            priceOfDelivery = Math.Round(priceOfDelivery, 2);
+
+            citynames[path.Length + 1] = priceOfDelivery.ToString();
 
             return citynames;
         }
