@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Net.Http;
 using DKCESTL1.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -39,15 +41,15 @@ namespace DKCESTL1
 
     
         [HttpGet("parseFastestDijkstraMap")]
-        public List<int[]> parseMapToFastestDijkstraList()
+        public List<int[]> parseMapToFastestDijkstraList(string parcelType,int parcelWeight)
         {
             List<Edge> map = lookupController.queryForMap().Value;
 
-            List<int[]> cityIdMap = new List<int[]>(); 
-
-            //ExternalIntegrationController externalRest = new ExternalIntegrationController();
+            List<int[]> cityIdMap = new List<int[]>();
 
             
+
+
 
             foreach (Edge edge in map)
             {
@@ -61,23 +63,27 @@ namespace DKCESTL1
 
                 int weight;
 
-                //if (edge.node == 0)
-                //{
-                //    if (((string) externalRest.Get(edge.fromCity.city, edge.toCity.city).getValue(0)).ToUpper()
-                //        .Equals("TRUE"))
-                //    {
-                //        weight = externalRest.Get(edge.fromCity.city, edge.toCity.city).getValue(2);
-                //    }
-                //    else
-                //    {
-                //        continue;
-                //    }
-                    
-                //}
-                //else
-                //{
+                
+
+                if (edge.node == 0)
+                {
+                    ExternalIntegrationController externalRest = new ExternalIntegrationController();
+                    ExternalIntegration EI = externalRest.Get(edge.fromCity.city, edge.toCity.city, parcelType,
+                        parcelWeight).Value;
+                    if (EI.possible)
+                    {
+                        weight = EI.duration;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
+                else
+                {
                     weight = edge.node * 4;
-                //}
+                }
 
                 int[] cityIdEdge = new int[] {city1, city2, weight };
 
@@ -85,7 +91,47 @@ namespace DKCESTL1
                 cityIdMap.Add(cityIdEdge);
             }
 
-            return cityIdMap;
+
+            int[][] jaggedArray = new int[cityIdMap.Count][];
+            int[] weights = new int[cityIdMap.Count];
+
+            int i = 0;
+            foreach (int[] row in cityIdMap)
+            {
+                jaggedArray[i] = row;
+                weights[i] = row[2];
+                i++;
+            }
+
+
+            Array.Sort(weights, jaggedArray);
+
+            List<int[]> finalList = new List<int[]>();
+            foreach (int[] row in jaggedArray)
+            {
+                finalList.Add(row);
+            }
+
+
+            i = 0;
+            foreach (int[] row in jaggedArray)
+            {
+                for (int j=i+1; j <= jaggedArray.Length-1; j++)
+                {
+                    int value1 = (int) jaggedArray[j].GetValue(0);
+                    int value2 = (int) row.GetValue((1));
+                    int value3 = (int) jaggedArray[j].GetValue(1);
+                    int value4 = (int) row.GetValue(0);
+                    if (value1 == value2 && value3 == value4)
+                    {
+                        finalList.RemoveAt(j);
+                    }
+                }
+
+                i++;
+            }
+
+            return finalList;
         }
 
 

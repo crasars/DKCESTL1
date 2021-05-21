@@ -7,7 +7,7 @@ namespace DKCESTL1
 {
     public class ExternalIntegration
     {
-        public bool possible { get; set; }
+        public bool available { get; set; }
         public double price { get; set; }
         public int duration { get; set; }
     }
