@@ -14,7 +14,7 @@ export default function Home() {
     const [cityDestination, setCityDestination] = useState<string>('');
     const [parcelType, setParcelType] = useState<string>('');
     const [weight, setWeight] = useState<number>(0);
-    const [result, setResult] = useState([]);
+    const [result, setResult] = useState<string>('');
 
     useEffect(() => {
         console.log('toCity', toCity, 'city destination', cityDestination, 'parcelType', parcelType, 'weight', weight, 'cheapest route', routeSelector, 'recommended parcel', recommendedParcel);
@@ -30,6 +30,12 @@ export default function Home() {
             console.log("path found", path);
             setResult(path);
         }
+    }
+
+    const getRouteText = (routeResult: any[]) => {
+        const pathText = routeResult.splice(0, -2);
+        console.log(pathText);
+        return pathText;
     }
 
     console.log('all cities', getCities());
@@ -99,7 +105,7 @@ export default function Home() {
                 </fieldset>
                 <Form.Group as={Row} controlId="formCheckRecommended">
                     <Col sm={{ span: 10, offset: 2 }}>
-                        <Form.Check type="checkbox" label="Recommended shipping" onChange={() => {setRecommendedParcel(!recommendedParcel)}} />
+                        <Form.Check type="checkbox" label="Recommended shipping" onChange={() => {setRecommendedParcel(!recommendedParcel)}}/>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
